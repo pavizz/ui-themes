@@ -122,6 +122,12 @@ async function applyTheme($: EngineInterface, name: string) {
 
 const PICKER = 'ui-theme-picker'
 
+// The message boxes are drawn for the terminal only: the desktop app, VS Code and
+// mobile keep their own message styling.
+function themedSurface(surface: string) {
+  return surface === 'terminal'
+}
+
 export const register: Register = on => {
   on('session.start', async ($, e, next) => {
     try {
@@ -218,6 +224,7 @@ export const register: Register = on => {
 
   // Your prompts: padded box in the theme's prompt colour
   on('ui.render', { component: 'UserMessage' }, ($, e, next) => {
+    if (!themedSurface(e.surface)) return next(e)
     // skip task notifications and messages from other agents; style everything you sent (live or resumed)
     if (e.props.task || e.props.from) return next(e)
     const { Box, Text } = $.ui.resolve(e)
@@ -229,7 +236,8 @@ export const register: Register = on => {
   })
 
   // Claude's replies: padded box in the theme's reply colour, markdown in theme colours
-  on('ui.render', { component: 'AssistantMessage' }, ($, e) => {
+  on('ui.render', { component: 'AssistantMessage' }, ($, e, next) => {
+    if (!themedSurface(e.surface)) return next(e)
     const t = $.ui.resolve(e)
     const { Box } = t
     return (

@@ -2,7 +2,7 @@
 
 Switchable themes for the Claude Code terminal UI:
 
-- Your prompts and Claude's replies drawn in padded, coloured boxes (Claude Code's defaults have no reply box and little prompt padding; the plugin draws both itself)
+- Your prompts and Claude's replies drawn in padded, coloured boxes (Claude Code's defaults have no reply box and little prompt padding; the plugin draws both itself). Only in the terminal: the desktop app, VS Code and mobile keep their own message styling
 - Reply markdown in theme colours (headings, `inline code`, **bold**, links, bullets, quotes)
 - A matching one-line status line: model (own icon and colour for Opus, Sonnet, Haiku and Fable), folder, git branch, context, 5h/7d limits
 - `/ui-theme` to pick a theme from a list and switch everything at once
